@@ -32,17 +32,37 @@ while running:
     
         # "Generate Maze" Button
     
-    text = button_font.render('Generate Maze', True, (255,255,255))
+    gen_maze_text = button_font.render('Generate Maze', True, (255,255,255))
 
     if 0 <= mouse[0] <= 140 and 0 <= mouse[1] <= 40:
         pygame.draw.rect(window, (150,150,150), [0, 0, 140, 40])
     else:
         pygame.draw.rect(window, (0,0,0), [0, 0, 140, 40])
+
+        # "Run" Button
+
+    run_text = button_font.render("Run", True, (255,255,255))
+
+    if 145 <= mouse[0] <= 285 and 0 <= mouse[1] <= 40:
+        pygame.draw.rect(window, (150,150,150), [145, 0, 140, 40])
+    else:
+        pygame.draw.rect(window, (0,0,0), [145, 0, 140, 40])
+
+        # "Settings" Button
+
+    settings_text = button_font.render("Settings", True, (255,255,255))
+
+    if 290 <= mouse[0] <= 430 and 0 <= mouse[1] <= 40:
+        pygame.draw.rect(window, (150,150,150), [290, 0, 140, 40])
+    else:
+        pygame.draw.rect(window, (0,0,0), [290, 0, 140, 40])
         
-    window.blit(text, (5, 10))
+    window.blit(gen_maze_text, (5, 10))
+    window.blit(run_text, (150, 10))
+    window.blit(settings_text, (295, 10))
     
     pygame.draw.rect(window, (0, 0, 0), [0, 40, 750, 5]) # Underline for the buttons
-    pygame.draw.rect(window, (0,0,0), [200, 200, 350, 350])
+    pygame.draw.rect(window, (0,0,0), [200, 200, 350, 350]) # Maze Block
     pygame.display.update()
     
     # Rest of Code
