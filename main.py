@@ -1,5 +1,6 @@
 from introduction import introduce
 import pygame
+from settings import settings_
 
 
 introduce()
@@ -28,6 +29,7 @@ while running:
     #--- Buttons ---
     
     mouse = pygame.mouse.get_pos()
+    clicked = pygame.mouse.get_pressed()[0]
     button_font = pygame.font.SysFont('Corbel',21)
     
         # "Generate Maze" Button
@@ -56,6 +58,10 @@ while running:
         pygame.draw.rect(window, (150,150,150), [290, 0, 140, 40])
     else:
         pygame.draw.rect(window, (0,0,0), [290, 0, 140, 40])
+
+    if 290 <= mouse[0] <= 430 and 0 <= mouse[1] <= 40 and clicked == True:
+        settings_()
+
         
     window.blit(gen_maze_text, (5, 10))
     window.blit(run_text, (150, 10))
