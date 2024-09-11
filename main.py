@@ -73,6 +73,4 @@ while running:
     
     # Rest of Code
     
-    pygame.display.flip()
-    
 pygame.quit()
