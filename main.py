@@ -8,6 +8,7 @@ from button_functions import draw_maze
 import buttons
 import button_functions
 
+global maze
 maze = blank
 introduce()
 
@@ -22,9 +23,9 @@ width = window.get_width()
 height = window.get_height()
 
 #--- Initialising Buttons ---
-gen_maze = buttons.Buttons("Generate Maze", 0, 0, draw_maze(maze, window, pygame))
-run = buttons.Buttons("Run", 145, 0, print("placeholder"))
-settings = buttons.Buttons("Settings", 290, 0, print("placeholder"))
+gen_maze = buttons.Buttons("Generate Maze", 0, 0)
+run = buttons.Buttons("Run", 145, 0)
+settings = buttons.Buttons("Settings", 290, 0)
 
 
 #--- Main Loop ---
@@ -48,21 +49,28 @@ while running:
         # "Generate Maze" Button
     gen_maze.draw(mouse, pygame, window, button_font, clicked)
             # Draws maze    
-    if 0 <= mouse[0] <= 140 and 0 <= mouse[1] <= 40 and clicked == True:
+    if (gen_maze.get_x_pos() <= mouse[0] <= gen_maze.get_x_pos()+140 and
+    gen_maze.get_y_pos() <= mouse[1] <= gen_maze.get_y_pos()+40 and
+    clicked == True):
         maze = random.choice(mazes)
 
         # "Run" Button
-
     run.draw(mouse, pygame, window, button_font, clicked)
+            # Run function
+    if (run.get_x_pos() <= mouse[0] <= run.get_x_pos()+140 and
+    run.get_y_pos() <= mouse[1] <= run.get_y_pos()+40 and
+    clicked == True):
+        print("run button pressed")
 
         # "Settings" Button
-
     settings.draw(mouse, pygame, window, button_font, clicked)
-
             # Opens Settings
-
-    if 290 <= mouse[0] <= 430 and 0 <= mouse[1] <= 40 and clicked == True:
+    if (settings.get_x_pos() <= mouse[0] <= settings.get_x_pos()+140 and
+    settings.get_y_pos() <= mouse[1] <= settings.get_y_pos()+40 and
+    clicked == True):
         settings_()
+
+    #-------------------------------------------------------------------------------------    
     
     pygame.draw.rect(window, (0, 0, 0), [0, 40, 750, 5]) # Underline for the buttons
     draw_maze(maze, window, pygame)
