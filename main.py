@@ -6,7 +6,6 @@ from mazes import blank
 import random
 from button_functions import draw_maze
 import buttons
-import button_functions
 
 global maze
 maze = blank
