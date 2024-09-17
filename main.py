@@ -1,10 +1,10 @@
 from introduction import introduce
 import pygame
-from settings import settings_
 from mazes import mazes
 from mazes import blank
 import random
 from button_functions import draw_maze
+from button_functions import settings_
 import buttons
 
 global maze
