@@ -5,6 +5,8 @@ from mazes import mazes
 from mazes import blank
 import random
 from button_functions import draw_maze
+import buttons
+import button_functions
 
 maze = blank
 introduce()
@@ -18,6 +20,11 @@ pygame.display.set_icon(mm_logo)
 
 width = window.get_width()
 height = window.get_height()
+
+#--- Initialising Buttons ---
+gen_maze = buttons.Buttons("Generate Maze", 0, 0, draw_maze(maze, window, pygame))
+run = buttons.Buttons("Run", 145, 0, print("placeholder"))
+settings = buttons.Buttons("Settings", 290, 0, print("placeholder"))
 
 
 #--- Main Loop ---
@@ -39,43 +46,23 @@ while running:
     button_font = pygame.font.SysFont('Corbel',21)
     
         # "Generate Maze" Button
-    
-    gen_maze_text = button_font.render('Generate Maze', True, (255,255,255))
-
-    if 0 <= mouse[0] <= 140 and 0 <= mouse[1] <= 40:
-        pygame.draw.rect(window, (150,150,150), [0, 0, 140, 40])
-    else:
-        pygame.draw.rect(window, (0,0,0), [0, 0, 140, 40])
-
-        # Draws maze    
+    gen_maze.draw(mouse, pygame, window, button_font, clicked)
+            # Draws maze    
     if 0 <= mouse[0] <= 140 and 0 <= mouse[1] <= 40 and clicked == True:
         maze = random.choice(mazes)
 
         # "Run" Button
 
-    run_text = button_font.render("Run", True, (255,255,255))
-
-    if 145 <= mouse[0] <= 285 and 0 <= mouse[1] <= 40:
-        pygame.draw.rect(window, (150,150,150), [145, 0, 140, 40])
-    else:
-        pygame.draw.rect(window, (0,0,0), [145, 0, 140, 40])
+    run.draw(mouse, pygame, window, button_font, clicked)
 
         # "Settings" Button
 
-    settings_text = button_font.render("Settings", True, (255,255,255))
+    settings.draw(mouse, pygame, window, button_font, clicked)
 
-    if 290 <= mouse[0] <= 430 and 0 <= mouse[1] <= 40:
-        pygame.draw.rect(window, (150,150,150), [290, 0, 140, 40])
-    else:
-        pygame.draw.rect(window, (0,0,0), [290, 0, 140, 40])
+            # Opens Settings
 
     if 290 <= mouse[0] <= 430 and 0 <= mouse[1] <= 40 and clicked == True:
         settings_()
-
-        
-    window.blit(gen_maze_text, (5, 10))
-    window.blit(run_text, (150, 10))
-    window.blit(settings_text, (295, 10))
     
     pygame.draw.rect(window, (0, 0, 0), [0, 40, 750, 5]) # Underline for the buttons
     draw_maze(maze, window, pygame)
