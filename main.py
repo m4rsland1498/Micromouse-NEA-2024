@@ -1,9 +1,12 @@
 from introduction import introduce
 import pygame
 from settings import settings_
-from mazes import maze1
+from mazes import mazes
+from mazes import blank
+import random
+from button_functions import draw_maze
 
-
+maze = blank
 introduce()
 
 pygame.init()
@@ -44,17 +47,9 @@ while running:
     else:
         pygame.draw.rect(window, (0,0,0), [0, 0, 140, 40])
 
-        # Draws maze
-        
+        # Draws maze    
     if 0 <= mouse[0] <= 140 and 0 <= mouse[1] <= 40 and clicked == True:
-        for i in range(len(maze1)):
-            for j in range(len(maze1[i])):
-                if maze1[i][j] == 1 or maze1[i][j] == 'S':
-                    pygame.draw.rect(window, (255,255,255), [155+(20*j), 155+(20*i), 20, 20])
-                elif maze1[i][j] == 'G':
-                    pygame.draw.rect(window, (255,0,0), [155+(20*j), 155+(20*i), 20, 20])
-                else:
-                    pygame.draw.rect(window, (0,0,0), [155+(20*j), 155+(20*i), 20, 20])
+        maze = random.choice(mazes)
 
         # "Run" Button
 
@@ -83,6 +78,7 @@ while running:
     window.blit(settings_text, (295, 10))
     
     pygame.draw.rect(window, (0, 0, 0), [0, 40, 750, 5]) # Underline for the buttons
+    draw_maze(maze, window, pygame)
     pygame.display.update()
     
     # Rest of Code
