@@ -44,9 +44,11 @@ while running:
     mouse = pygame.mouse.get_pos()
     clicked = pygame.mouse.get_pressed()[0]
     button_font = pygame.font.SysFont('Corbel',21)
+
+    for i in buttons.Buttons.instances:
+        i.draw(mouse, pygame, window, button_font, clicked)
     
         # "Generate Maze" Button
-    gen_maze.draw(mouse, pygame, window, button_font, clicked)
             # Draws maze    
     if (gen_maze.get_x_pos() <= mouse[0] <= gen_maze.get_x_pos()+140 and
     gen_maze.get_y_pos() <= mouse[1] <= gen_maze.get_y_pos()+40 and
@@ -54,15 +56,13 @@ while running:
         maze = random.choice(mazes)
 
         # "Run" Button
-    run.draw(mouse, pygame, window, button_font, clicked)
             # Run function
     if (run.get_x_pos() <= mouse[0] <= run.get_x_pos()+140 and
     run.get_y_pos() <= mouse[1] <= run.get_y_pos()+40 and
     clicked == True):
-        print("run button pressed")
+        print("run button pressed (this is a placeholder)")
 
         # "Settings" Button
-    settings.draw(mouse, pygame, window, button_font, clicked)
             # Opens Settings
     if (settings.get_x_pos() <= mouse[0] <= settings.get_x_pos()+140 and
     settings.get_y_pos() <= mouse[1] <= settings.get_y_pos()+40 and
