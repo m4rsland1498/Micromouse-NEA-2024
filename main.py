@@ -8,7 +8,9 @@ from mazes import blank
 import random
 from button_functions import draw_maze
 from button_functions import settings_
+import mouse
 import buttons
+
 
 global maze
 maze = blank
@@ -24,10 +26,12 @@ pygame.display.set_icon(mm_logo)
 width = window.get_width()
 height = window.get_height()
 
-#--- Initialising Buttons ---
+#--- Initialising Buttons (and mouse) ---
 gen_maze = buttons.Buttons("Generate Maze", 0, 0)
 run = buttons.Buttons("Run", 145, 0)
 settings = buttons.Buttons("Settings", 290, 0)
+
+mouse_sprite = mouse.mouse_sprite()
 
 
 #--- Main Loop ---
@@ -43,7 +47,7 @@ while running:
     pygame.draw.rect(window, (0,0,0), [155, 155, 440, 440]) # Maze Block
     
     #--- Buttons ---
-    
+
     mouse = pygame.mouse.get_pos()
     clicked = pygame.mouse.get_pressed()[0]
     button_font = pygame.font.SysFont('Corbel',21)
@@ -76,6 +80,10 @@ while running:
     
     pygame.draw.rect(window, (0, 0, 0), [0, 40, 750, 5]) # Underline for the buttons
     draw_maze(maze, window, pygame)
+    
+    if maze != blank:
+        mouse_sprite.draw(window, pygame) #draws mouse if a maze has been generated
+
     pygame.display.update()
     
     # Rest of Code
