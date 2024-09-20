@@ -82,7 +82,7 @@ while running:
     pygame.draw.rect(window, (0, 0, 0), [0, 40, 750, 5]) # Underline for the buttons
     draw_maze(maze, window, pygame)
     
-    if maze == blank:
+    if maze != blank:
         mouse_sprite.draw(window, pygame) #draws mouse if a maze has been generated
 
     pygame.display.update()
