@@ -10,6 +10,7 @@ from button_functions import draw_maze
 from button_functions import settings_
 import mouse
 import buttons
+import time
 
 
 global maze
@@ -33,6 +34,9 @@ settings = buttons.Buttons("Settings", 290, 0)
 
 mouse_sprite = mouse.mouse_sprite()
 
+#--- test initial movement variables ---
+x=0
+y=0
 
 #--- Main Loop ---
 running = True
@@ -81,8 +85,19 @@ while running:
     pygame.draw.rect(window, (0, 0, 0), [0, 40, 750, 5]) # Underline for the buttons
     draw_maze(maze, window, pygame)
     
-    if maze != blank:
+    if maze == blank:  # change "==" to "!=", only "==" for testing
         mouse_sprite.draw(window, pygame) #draws mouse if a maze has been generated
+
+    if y == 22:
+        pass
+    else:
+        mouse_sprite.x = 175 + (x*20)
+        mouse_sprite.y = 175 + (y*20)
+        x += 1
+        if x == 22:
+            x = 0
+            y += 1
+        time.sleep(0.15)
 
     pygame.display.update()
     
