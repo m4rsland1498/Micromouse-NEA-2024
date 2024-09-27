@@ -1,13 +1,9 @@
 import tkinter as tk
 from tkinter import font as tkfont
+from settings import settings__
 
 def settings_():
-    window = tk.Tk()
-    window.title("Settings")
-    window.geometry("300x300")
-    window.iconbitmap("logo.ico")
-
-    window.mainloop()
+    settings__()
 
 def draw_maze(maze, window, pygame):
     for i in range(len(maze)):

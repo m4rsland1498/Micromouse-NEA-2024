@@ -9,7 +9,7 @@ def introduce():
     window = tk.Tk()
     window.title("Introduction")
     window.geometry("750x750")
-    window.iconbitmap("logo.ico")
+    #window.iconbitmap("logo.ico")
 
     xlarge_font = tkfont.Font(size=24, weight="bold")
     large_font = tkfont.Font(size=15, weight="bold")
