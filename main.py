@@ -19,6 +19,11 @@ global maze
 maze = blank
 introduce()
 
+f = open("is_settings_open.txt", "w")
+f.write("no")
+f.close()
+is_open = "no"
+
 pygame.init()
 
 window = pygame.display.set_mode([750,750])
@@ -42,12 +47,17 @@ running = True
 while running:
     
     for event in pygame.event.get():
-        if event.type == pygame.QUIT:
+        if (event.type == pygame.QUIT  and is_open == "no"):
             running = False
             
     window.fill((255,255,255))
 
     pygame.draw.rect(window, (0,0,0), [155, 155, 440, 440]) # Maze Block
+
+    #--- Checks if settings is open ---
+    f = open("is_settings_open.txt", "r")
+    is_open = str((f.read()))
+    f.close()
     
     #--- Buttons ---
 
@@ -62,29 +72,22 @@ while running:
             # Draws maze    
     if (gen_maze.get_x_pos() <= mouse[0] <= gen_maze.get_x_pos()+140 and
     gen_maze.get_y_pos() <= mouse[1] <= gen_maze.get_y_pos()+40 and
-    clicked == True):
+    clicked == True and is_open == "no"):
         maze = random.choice(mazes)
 
         # "Run" Button
             # Run function
     if (run.get_x_pos() <= mouse[0] <= run.get_x_pos()+140 and
     run.get_y_pos() <= mouse[1] <= run.get_y_pos()+40 and
-    clicked == True):
+    clicked == True and is_open == "no"):
         print("run button pressed (this is a placeholder)")
 
         # "Settings" Button
             # Opens Settings
     if (settings.get_x_pos() <= mouse[0] <= settings.get_x_pos()+140 and
     settings.get_y_pos() <= mouse[1] <= settings.get_y_pos()+40 and
-    clicked == True):
+    clicked == True and is_open == "no"):
         threading.Thread(target=settings_).start()
-        #settings_()
-        is_open == "yes"
-        while is_open == "yes":
-            f = open("is_settings_open.txt", "r")
-            is_open = str((f.read()))
-            pygame.time.delay(10)
-            # causes same issue
 
     #-------------------------------------------------------------------------------------    
     
