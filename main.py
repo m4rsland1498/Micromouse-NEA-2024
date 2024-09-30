@@ -84,7 +84,7 @@ while running:
             f = open("is_settings_open.txt", "r")
             is_open = str((f.read()))
             pygame.time.delay(10)
-            # causes same issue 
+            # causes same issue
 
     #-------------------------------------------------------------------------------------    
     
