@@ -1,6 +1,8 @@
 import os
 os.environ['PYGAME_HIDE_SUPPORT_PROMPT'] = "hide"
 
+import threading
+
 from introduction import introduce
 import pygame
 from mazes import mazes
@@ -75,7 +77,14 @@ while running:
     if (settings.get_x_pos() <= mouse[0] <= settings.get_x_pos()+140 and
     settings.get_y_pos() <= mouse[1] <= settings.get_y_pos()+40 and
     clicked == True):
-        settings_()
+        threading.Thread(target=settings_).start()
+        #settings_()
+        is_open == "yes"
+        while is_open == "yes":
+            f = open("is_settings_open.txt", "r")
+            is_open = str((f.read()))
+            pygame.time.delay(10)
+            # causes same issue
 
     #-------------------------------------------------------------------------------------    
     
