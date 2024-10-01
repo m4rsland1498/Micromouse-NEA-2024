@@ -12,7 +12,6 @@ from button_functions import draw_maze
 from button_functions import settings_
 import mouse
 import buttons
-import time
 
 
 global maze
