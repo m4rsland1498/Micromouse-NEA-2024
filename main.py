@@ -33,7 +33,7 @@ pygame.display.set_icon(mm_logo)
 width = window.get_width()
 height = window.get_height()
 
-#--- Initialising Buttons (and mouse) ---
+#--- Initialising Buttons (and mouse) --- 
 gen_maze = buttons.Buttons("Generate Maze", 0, 0)
 run = buttons.Buttons("Run", 145, 0)
 settings = buttons.Buttons("Settings", 290, 0)
