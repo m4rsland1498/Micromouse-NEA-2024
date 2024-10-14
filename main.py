@@ -85,7 +85,7 @@ while running:
     run.get_y_pos() <= mouse[1] <= run.get_y_pos()+40 and
     clicked == True and is_open == "no" and maze != blank):
 
-        undicovered_maze = [['X' for _ in range(22)] for _ in range(22)]
+        undicovered_maze = [['X' for i in range(22)] for i in range(22)]
         visited = []
 
         df_search = dfs(maze, 1, 1, visited, undicovered_maze)
