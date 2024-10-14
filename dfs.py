@@ -21,13 +21,15 @@ def dfs(maze, x, y, visited, discovered_maze):
         
         elif i not in visited and i[0] != 0 and i[0] != 21 and i[1] != 0 and i[1] != 21:
             discovered_maze[i[0]][i[1]] = 1
+            discovered_maze[x][y] = 1
+            if maze[i[0]][i[1]] == "G":
+                discovered_maze[i[0]][i[1]] = "G"
+            if maze[x][y] == "G":
+                discovered_maze[x][y] = "G"
             dfs(maze, i[0], i[1], visited, discovered_maze)
 
     return visited, discovered_maze
 
-from mazes import maze1
 
-search = dfs(maze1, 1, 1, [], undicovered_maze)
-print(search[1])
 
         
