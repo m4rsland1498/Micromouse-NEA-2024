@@ -82,6 +82,7 @@ while running:
         # "Run" Button
             # Run function
     if (run.get_x_pos() <= mouse[0] <= run.get_x_pos()+140 and
+        
     run.get_y_pos() <= mouse[1] <= run.get_y_pos()+40 and
     clicked == True and is_open == "no" and maze != blank):
 
@@ -90,8 +91,8 @@ while running:
 
         df_search = dfs(maze, 1, 1, visited, undicovered_maze)
         for i in df_search[0]:
-            mouse_sprite.x = 175 + (i[0]*20)
-            mouse_sprite.y = 175 + (i[1]*20)
+            mouse_sprite.x = 155 + (i[0]*20)
+            mouse_sprite.y = 155 + (i[1]*20)
             #pygame.time.delay(150)
 
         maze = df_search[1]
