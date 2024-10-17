@@ -42,6 +42,10 @@ settings = buttons.Buttons("Settings", 290, 0)
 
 mouse_sprite = mouse.mouse_sprite()
 
+# --- Initial variables for "Run" ---
+i_in_visited = -1
+mouse_is_running = False
+
 
 #--- Main Loop ---
 running = True
@@ -81,19 +85,35 @@ while running:
 
         # "Run" Button
             # Run function
-    if (run.get_x_pos() <= mouse[0] <= run.get_x_pos()+140 and
-        
+    if (run.get_x_pos() <= mouse[0] <= run.get_x_pos()+140 and 
     run.get_y_pos() <= mouse[1] <= run.get_y_pos()+40 and
     clicked == True and is_open == "no" and maze != blank):
+        
+        mouse_is_running = True
+        i_in_visited = 0
 
         undicovered_maze = [['X' for i in range(22)] for i in range(22)]
         visited = []
 
         df_search = dfs(maze, 1, 1, visited, undicovered_maze)
+        '''
         for i in df_search[0]:
             mouse_sprite.x = 155 + (i[0]*20)
             mouse_sprite.y = 155 + (i[1]*20)
             #pygame.time.delay(150)
+            time.sleep(0.15)
+            #pygame.display.update()
+        '''
+
+        '''
+        if i_in_visited == len(df_search[0]):
+            mouse_is_running = False
+            i_in_visited = 0
+        else:
+            mouse_sprite.x = 155 + (df_search[0][i_in_visited][0]*20)
+            mouse_sprite.y = 155 + (df_search[0][i_in_visited][1]*20)
+            i_in_visited += 1
+        '''
 
         maze = df_search[1]
 
@@ -110,9 +130,25 @@ while running:
     
     pygame.draw.rect(window, (0, 0, 0), [0, 40, 750, 5]) # Underline for the buttons
     draw_maze(maze, window, pygame)
-    
+
     if maze != blank:
         mouse_sprite.draw(window, pygame) #draws mouse if a maze has been generated
+    
+    # --- Visuals when mouse is running dfs-----------------------------------------------
+    try:
+        if i_in_visited == len(df_search[0]) or i_in_visited == -1:
+            mouse_is_running = False
+            i_in_visited = -1
+        else:
+            mouse_sprite.x = 155 + (df_search[0][i_in_visited][0]*20)
+            mouse_sprite.y = 155 + (df_search[0][i_in_visited][1]*20)
+            i_in_visited += 1
+
+        if mouse_is_running == True:
+            pygame.time.delay(150)
+    except:
+        pass
+    #-------------------------------------------------------------------------------------
 
     pygame.display.update()
     
