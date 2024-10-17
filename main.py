@@ -140,8 +140,8 @@ while running:
             mouse_is_running = False
             i_in_visited = -1
         else:
-            mouse_sprite.x = 155 + (df_search[0][i_in_visited][0]*20)
-            mouse_sprite.y = 155 + (df_search[0][i_in_visited][1]*20)
+            mouse_sprite.x = 155 + (df_search[0][i_in_visited][1]*20)
+            mouse_sprite.y = 155 + (df_search[0][i_in_visited][0]*20)
             i_in_visited += 1
 
         if mouse_is_running == True:
