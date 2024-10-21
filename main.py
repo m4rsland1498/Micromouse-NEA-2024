@@ -77,7 +77,7 @@ while running:
             # Draws maze    
     if (gen_maze.get_x_pos() <= mouse[0] <= gen_maze.get_x_pos()+140 and
     gen_maze.get_y_pos() <= mouse[1] <= gen_maze.get_y_pos()+40 and
-    clicked == True and is_open == "no"):
+    clicked == True and is_open == "no" and mouse_is_running == False):
         maze = random.choice(mazes)
 
         mouse_sprite.x = 175
