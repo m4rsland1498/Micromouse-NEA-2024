@@ -87,7 +87,7 @@ while running:
             # Run function
     if (run.get_x_pos() <= mouse[0] <= run.get_x_pos()+140 and 
     run.get_y_pos() <= mouse[1] <= run.get_y_pos()+40 and
-    clicked == True and is_open == "no" and maze != blank):
+    clicked == True and is_open == "no" and maze != blank and mouse_is_running == False):
         
         mouse_is_running = True
         i_in_visited = 0
