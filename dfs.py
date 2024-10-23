@@ -27,6 +27,9 @@ def dfs(maze, x, y, visited, discovered_maze):
             if maze[x][y] == "G":
                 discovered_maze[x][y] = "G"
             dfs(maze, i[0], i[1], visited, discovered_maze)
+            visited.append([x,y]) # backtracking nodes
+    
+    
 
     return visited, discovered_maze
 
