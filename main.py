@@ -96,24 +96,6 @@ while running:
         visited = []
 
         df_search = dfs(maze, 1, 1, visited, undicovered_maze)
-        '''
-        for i in df_search[0]:
-            mouse_sprite.x = 155 + (i[0]*20)
-            mouse_sprite.y = 155 + (i[1]*20)
-            #pygame.time.delay(150)
-            time.sleep(0.15)
-            #pygame.display.update()
-        '''
-
-        '''
-        if i_in_visited == len(df_search[0]):
-            mouse_is_running = False
-            i_in_visited = 0
-        else:
-            mouse_sprite.x = 155 + (df_search[0][i_in_visited][0]*20)
-            mouse_sprite.y = 155 + (df_search[0][i_in_visited][1]*20)
-            i_in_visited += 1
-        '''
 
         maze = df_search[1]
 
@@ -123,7 +105,7 @@ while running:
             # Opens Settings
     if (settings.get_x_pos() <= mouse[0] <= settings.get_x_pos()+140 and
     settings.get_y_pos() <= mouse[1] <= settings.get_y_pos()+40 and
-    clicked == True and is_open == "no"):
+    clicked == True and is_open == "no" and mouse_is_running == False):
         threading.Thread(target=settings_).start()
 
     #-------------------------------------------------------------------------------------    
