@@ -3,4 +3,4 @@
 
 🐁 This NEA aims to simulate micromice - small, automated robots that solve mazes and compete for the fastest time.
 
-🤖 It will simulate the logic and algorithms the mice use as well as the physics from their movement.
+🤖 It will simulate the logic and algorithms the mice use as well as the physics of their movement.
