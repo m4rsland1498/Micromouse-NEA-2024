@@ -13,8 +13,9 @@ def flood_fill(maze, SOC):
             # decrease as further away so that maze arrays
             # can still use 1 and 0 for paths and walls for continuity
         for j in directions:
-            try: # catches out of bounds errors
-                if maze[i[0]+j[0]][i[1]+j[1]] != 0 and (maze[i[0]+j[0]][i[1]+j[1]] <= maze[i[0]][i[1]]
+
+            try: # catches out of bounds errors and type errors between "S"/"G" and 0/1
+                if (maze[i[0]+j[0]][i[1]+j[1]] != 0) and (maze[i[0]+j[0]][i[1]+j[1]] <= maze[i[0]][i[1]]
                     or maze[i[0]+j[0]][i[1]+j[1]] == 1 
                     or maze[i[0]+j[0]][i[1]+j[1]] == "S"):
                     completed = False
@@ -22,11 +23,13 @@ def flood_fill(maze, SOC):
                     new_SOC.append(([i[0]+j[0] , i[1]+j[1]]))
             except:
                 pass
+            
     if not completed:
         return flood_fill(maze, new_SOC)
     else:
         return maze
     
+# testing below
 maze1 = [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
  [0, 'S', 1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0],
  [0, 0, 1, 0, 0, 0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 0],

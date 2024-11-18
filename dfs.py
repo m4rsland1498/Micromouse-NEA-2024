@@ -1,4 +1,4 @@
-undicovered_maze = [['X' for _ in range(22)] for _ in range(22)]
+undiscovered_maze = [['X' for i in range(22)] for i in range(22)] # testing
 
 def dfs(maze, x, y, visited, discovered_maze):
 

@@ -13,7 +13,7 @@ from button_functions import settings_
 from dfs import dfs
 import mouse
 import buttons
-import time
+from floodFill import flood_fill
 
 
 global maze
@@ -88,18 +88,40 @@ while running:
     if (run.get_x_pos() <= mouse[0] <= run.get_x_pos()+140 and 
     run.get_y_pos() <= mouse[1] <= run.get_y_pos()+40 and
     clicked == True and is_open == "no" and maze != blank and mouse_is_running == False):
-        
+    # --- dfs ----------------------------------------------------------------------------
         mouse_is_running = True
         i_in_visited = 0
 
-        undicovered_maze = [['X' for i in range(22)] for i in range(22)]
+        undiscovered_maze = [['X' for i in range(22)] for i in range(22)]
         visited = []
 
-        df_search = dfs(maze, 1, 1, visited, undicovered_maze)
+        df_search = dfs(maze, 1, 1, visited, undiscovered_maze)
 
         maze = df_search[1]
 
         print(df_search[0])
+    #-------------------------------------------------------------------------------------
+    #--- flood fill ----------------------------------------------------------------------
+        x=-1
+        y=-1
+        final_x = 0
+        final_y = 0
+        for i in maze:
+            y+=1
+            x=-1
+            for j in i:
+                x+=1
+                if maze[x][y] == "X":
+                    maze[x][y] = 0
+                elif maze[x][y] == "G":
+                    final_x = x
+                    final_y = y
+                else:
+                    pass
+        flooded = flood_fill(maze, [(final_x,final_y)])
+        print("maze:", maze)
+        print("flooded:", flooded)
+    #-------------------------------------------------------------------------------------
 
         # "Settings" Button
             # Opens Settings
@@ -126,8 +148,8 @@ while running:
             mouse_sprite.y = 155 + (df_search[0][i_in_visited][0]*20)
             i_in_visited += 1
 
-        if mouse_is_running == True:
-            pygame.time.delay(150)
+        #if mouse_is_running == True:
+            #pygame.time.delay(150)
     except:
         pass
     #-------------------------------------------------------------------------------------
