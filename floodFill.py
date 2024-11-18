@@ -1,4 +1,6 @@
 def flood_fill(maze, SOC):
+    gx = SOC[0][0]
+    gy = SOC[0][1]
     new_SOC = []
     directions = [
                   [1,0], # right
@@ -27,8 +29,31 @@ def flood_fill(maze, SOC):
     if not completed:
         return flood_fill(maze, new_SOC)
     else:
-        return maze
+        return best_path(maze, [(gx,gy)])
     
+def best_path(maze, path):
+    directions = [
+                  [1,0], # right
+                  [0,1], # down
+                  [-1,0], # left
+                  [0,-1], # up
+                  ]
+    next_best = (0,0)
+    current = path.pop()
+    print(type(current))
+    for i in directions:
+        if maze[current[0]+i[0]][current[1]+i[1]] == -1:
+            return path
+        elif next_best == (0,0):
+            next_best = (current[0]+i[0],current[1]+i[1])
+        elif maze[current[0]+i[0]][current[1]+i[1]] < maze[next_best[0]][next_best[1]]:
+            next_best = maze[next_best[0]][next_best[1]]
+    path.append(next_best)
+    return best_path(maze, path)
+
+
+
+
 # testing below 
 maze1 = [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
  [0, 'S', 1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0],
