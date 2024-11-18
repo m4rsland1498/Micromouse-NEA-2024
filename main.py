@@ -13,7 +13,7 @@ from button_functions import settings_
 from dfs import dfs
 import mouse
 import buttons
-import time
+from floodFill import flood_fill
 
 
 global maze
@@ -88,7 +88,7 @@ while running:
     if (run.get_x_pos() <= mouse[0] <= run.get_x_pos()+140 and 
     run.get_y_pos() <= mouse[1] <= run.get_y_pos()+40 and
     clicked == True and is_open == "no" and maze != blank and mouse_is_running == False):
-        
+    # --- dfs ----------------------------------------------------------------------------
         mouse_is_running = True
         i_in_visited = 0
 
@@ -100,6 +100,20 @@ while running:
         maze = df_search[1]
 
         print(df_search[0])
+    #-------------------------------------------------------------------------------------
+    #--- flood fill ----------------------------------------------------------------------
+        x=-1
+        y=-1
+        for i in maze:
+            y+=1
+            x=-1
+            for j in i:
+                x+=1
+                if maze[x][y] == "G":
+                    break
+        flooded = flood_fill(maze, [(x,y)])
+        print("flooded:", flooded)
+    #-------------------------------------------------------------------------------------
 
         # "Settings" Button
             # Opens Settings
@@ -126,14 +140,17 @@ while running:
             mouse_sprite.y = 155 + (df_search[0][i_in_visited][0]*20)
             i_in_visited += 1
 
-        if mouse_is_running == True:
-            pygame.time.delay(150)
+        #if mouse_is_running == True:
+            #pygame.time.delay(150)
     except:
         pass
     #-------------------------------------------------------------------------------------
 
     pygame.display.update()
     
+    # Rest of Code
+    
+pygame.quit()
     # Rest of Code
     
 pygame.quit()
