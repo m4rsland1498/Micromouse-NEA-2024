@@ -32,6 +32,7 @@ def dfs(maze, x, y, visited, discovered_maze):
     
 
     return visited, discovered_maze
+#
 
 
 

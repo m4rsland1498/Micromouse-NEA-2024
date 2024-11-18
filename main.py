@@ -121,7 +121,7 @@ while running:
         flooded = flood_fill(maze, [(final_x,final_y)])
         print("maze:", maze)
         print("flooded:", flooded)
-    #-------------------------------------------------------------------------------------
+    #------------------------------------------------------------------------------------
 
         # "Settings" Button
             # Opens Settings
