@@ -39,6 +39,7 @@ def best_path(maze, path):
                   [0,-1], # up
                   ]
     next_best = (0,0)
+    print(type(next_best))
     current = path.pop()
     print(type(current))
     for i in directions:
@@ -50,8 +51,6 @@ def best_path(maze, path):
             next_best = maze[next_best[0]][next_best[1]]
     path.append(next_best)
     return best_path(maze, path)
-
-
 
 
 # testing below 
