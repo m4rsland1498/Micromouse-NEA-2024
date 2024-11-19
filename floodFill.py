@@ -1,6 +1,4 @@
 def flood_fill(maze, SOC):
-    gx = SOC[0][0]
-    gy = SOC[0][1]
     new_SOC = []
     directions = [
                   [1,0], # right
@@ -9,6 +7,7 @@ def flood_fill(maze, SOC):
                   [0,-1], # up
                   ]
     completed = True
+    
     for i in SOC:
         if maze[i[0]][i[1]] == "G":
             maze[i[0]][i[1]] = -1 # distances indexed at -1,
@@ -29,26 +28,41 @@ def flood_fill(maze, SOC):
     if not completed:
         return flood_fill(maze, new_SOC)
     else:
-        return best_path(maze, [(gx,gy)])
-    
+        return maze#best_path(maze, [[1,1]]) # start coordinates
+
 def best_path(maze, path):
+
     directions = [
                   [1,0], # right
                   [0,1], # down
                   [-1,0], # left
                   [0,-1], # up
                   ]
-    next_best = (0,0)
-    print(type(next_best))
-    current = path.pop()
-    print(type(current))
+    
+    next_best = [2, 1]
+    current = path[-1]
+
     for i in directions:
-        if maze[current[0]+i[0]][current[1]+i[1]] == -1:
-            return path
-        elif next_best == (0,0):
-            next_best = (current[0]+i[0],current[1]+i[1])
-        elif maze[current[0]+i[0]][current[1]+i[1]] < maze[next_best[0]][next_best[1]]:
-            next_best = maze[next_best[0]][next_best[1]]
+
+        try: # catches type errors when S is a neighbour
+
+            if maze[current[0]][current[1]] == "S":
+                pfm = [1+i[0], 1+i[1]] # possible first move
+                if maze[pfm[0]][pfm[1]] > maze[next_best[0]][next_best[1]]:
+                    next_best = [pfm[0],pfm[1]]
+
+
+            elif maze[current[0]+i[0]][current[1]+i[1]] == -1:
+                path.append([[current[0]+i[0]], [current[1]+i[1]]])
+                return path
+            
+            elif (maze[next_best[0]][next_best[1]] < maze[current[0]+i[0]][current[1]+i[1]] 
+                and maze[current[0]+i[0]][current[1]+i[1]] != 0):
+                next_best = [current[0]+i[0],current[1]+i[1]]
+
+        except:
+            pass # we can pass as we do not need to return to the start
+
     path.append(next_best)
     return best_path(maze, path)
 
