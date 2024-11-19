@@ -104,13 +104,17 @@ while running:
     #--- flood fill ----------------------------------------------------------------------
         x=-1
         y=-1
+<<<<<<< HEAD
         final_x = 0
         final_y = 0
+=======
+>>>>>>> d2869a08c2921552b4df456908164068496e6c8c
         for i in maze:
             y+=1
             x=-1
             for j in i:
                 x+=1
+<<<<<<< HEAD
                 if maze[x][y] == "X":
                     maze[x][y] = 0
                 elif maze[x][y] == "G":
@@ -122,6 +126,13 @@ while running:
         print("maze:", maze)
         print("flooded:", flooded)
     #------------------------------------------------------------------------------------
+=======
+                if maze[x][y] == "G":
+                    break
+        flooded = flood_fill(maze, [(x,y)])
+        print("flooded:", flooded)
+    #-------------------------------------------------------------------------------------
+>>>>>>> d2869a08c2921552b4df456908164068496e6c8c
 
         # "Settings" Button
             # Opens Settings
@@ -156,6 +167,9 @@ while running:
 
     pygame.display.update()
     
+    # Rest of Code
+    
+pygame.quit()
     # Rest of Code
     
 pygame.quit()
