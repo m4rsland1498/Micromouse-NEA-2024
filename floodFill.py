@@ -30,7 +30,7 @@ def flood_fill(maze, SOC):
     else:
         return maze#best_path(maze, [[1,1]]) # start coordinates
 
-def best_path(maze, path):
+def best_path(maze, path, completed):
 
     directions = [
                   [1,0], # right
@@ -39,8 +39,8 @@ def best_path(maze, path):
                   [0,-1], # up
                   ]
     
-    next_best = [2, 1]
     current = path[-1]
+    next_best = [current[0]+1, current[1]+0]
 
     for i in directions:
 
@@ -53,7 +53,8 @@ def best_path(maze, path):
 
 
             elif maze[current[0]+i[0]][current[1]+i[1]] == -1:
-                path.append([[current[0]+i[0]], [current[1]+i[1]]])
+                path.append([current[0]+i[0], current[1]+i[1]])
+                completed = True
                 return path
             
             elif (maze[next_best[0]][next_best[1]] < maze[current[0]+i[0]][current[1]+i[1]] 
@@ -64,7 +65,8 @@ def best_path(maze, path):
             pass # we can pass as we do not need to return to the start
 
     path.append(next_best)
-    return best_path(maze, path)
+    if not completed:
+        return best_path(maze, path, completed)
 
 
 # testing below 
@@ -91,4 +93,6 @@ maze1 = [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
  [0, 0, 0, 1, 0, 1, 0, 0, 0, 1, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0],
  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]]
 
-print(flood_fill(maze1, [(11,11)]))
+maze = flood_fill(maze1, [(11,11)])
+print(maze)
+print(best_path(maze, [[1,1]], False)) # start coordinates
