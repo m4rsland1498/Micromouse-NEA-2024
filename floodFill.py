@@ -23,7 +23,7 @@ def flood_fill(maze, SOC):
                     maze[i[0]+j[0]][i[1]+j[1]] = maze[i[0]][i[1]] - 1
                     new_SOC.append(([i[0]+j[0] , i[1]+j[1]]))
             except:
-                pass
+                maze[1][1] = maze[i[0]][i[1]] - 1
             
     if not completed:
         return flood_fill(maze, new_SOC)
@@ -44,26 +44,26 @@ def best_path(maze, path, completed):
 
     for i in directions:
 
-        try: # catches type errors when S is a neighbour
+        #try: # catches type errors when S is a neighbour
 
-            if current == [1,1]: # Start node
-                pfm = [1+i[0], 1+i[1]] # possible first move
-                if maze[pfm[0]][pfm[1]] > maze[next_best[0]][next_best[1]]:
-                    next_best = [pfm[0],pfm[1]]
+        if current == [1,1]: # Start node
+            pfm = [1+i[0], 1+i[1]] # possible first move
+            if maze[pfm[0]][pfm[1]] > maze[next_best[0]][next_best[1]]:
+                next_best = [pfm[0],pfm[1]]    
 
 
-            elif maze[current[0]+i[0]][current[1]+i[1]] == -1:
-                path.append([current[0]+i[0], current[1]+i[1]])
-                completed = True
-                print("completed") # debugging
-                return path
+        elif maze[current[0]+i[0]][current[1]+i[1]] == -1:
+            path.append([current[0]+i[0], current[1]+i[1]])
+            completed = True
+            print("completed") # debugging
+            return path
             
-            elif (maze[next_best[0]][next_best[1]] < maze[current[0]+i[0]][current[1]+i[1]] 
-                and maze[current[0]+i[0]][current[1]+i[1]] != 0):
-                next_best = [current[0]+i[0],current[1]+i[1]]
+        elif (maze[next_best[0]][next_best[1]] < maze[current[0]+i[0]][current[1]+i[1]] 
+            and maze[current[0]+i[0]][current[1]+i[1]] != 0):
+            next_best = [current[0]+i[0],current[1]+i[1]]        
 
-        except:
-            pass # we can pass as we do not need to return to the start
+        #except:
+            #pass # we can pass as we do not need to return to the start
 
     path.append(next_best)
     if not completed:
