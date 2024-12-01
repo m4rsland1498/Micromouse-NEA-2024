@@ -99,4 +99,4 @@ maze1 = [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
 
 maze = flood_fill(maze1, [(11,11)])
 print(maze)
-print(best_path(maze, [[1,1]], False)) # start coordinates
+#print(best_path(maze, [[1,1]], False)) # start coordinates

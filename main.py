@@ -44,7 +44,9 @@ mouse_sprite = mouse.mouse_sprite()
 
 # --- Initial variables for "Run" ---
 i_in_visited = -1
-mouse_is_running = False
+i_in_best_path = 0
+dfs_running = False
+speed_running = False
 
 
 #--- Main Loop ---
@@ -77,7 +79,8 @@ while running:
             # Draws maze    
     if (gen_maze.get_x_pos() <= mouse[0] <= gen_maze.get_x_pos()+140 and
     gen_maze.get_y_pos() <= mouse[1] <= gen_maze.get_y_pos()+40 and
-    clicked == True and is_open == "no" and mouse_is_running == False):
+    clicked == True and is_open == "no" and dfs_running == False
+    and speed_running == False):
         maze = random.choice(mazes)
 
         mouse_sprite.x = 175
@@ -87,9 +90,11 @@ while running:
             # Run function
     if (run.get_x_pos() <= mouse[0] <= run.get_x_pos()+140 and 
     run.get_y_pos() <= mouse[1] <= run.get_y_pos()+40 and
-    clicked == True and is_open == "no" and maze != blank and mouse_is_running == False):
+    clicked == True and is_open == "no" and maze != blank and dfs_running == False
+    and speed_running == False):
     # --- dfs ----------------------------------------------------------------------------
-        mouse_is_running = True
+        dfs_running = True
+        speed_running = True
         i_in_visited = 0
 
         undiscovered_maze = [['X' for i in range(22)] for i in range(22)]
@@ -102,13 +107,13 @@ while running:
         print(df_search[0])
     #-------------------------------------------------------------------------------------
     #--- flood fill ----------------------------------------------------------------------
-        x=-1
-        y=-1
+        x =- 1
+        y = -1
         final_x = 0
         final_y = 0
         for i in maze:
-            y+=1
-            x=-1
+            y += 1
+            x = -1
             for j in i:
                 x+=1
                 if maze[x][y] == "X":
@@ -127,7 +132,8 @@ while running:
             # Opens Settings
     if (settings.get_x_pos() <= mouse[0] <= settings.get_x_pos()+140 and
     settings.get_y_pos() <= mouse[1] <= settings.get_y_pos()+40 and
-    clicked == True and is_open == "no" and mouse_is_running == False):
+    clicked == True and is_open == "no" and dfs_running == False
+    and speed_running == False):
         threading.Thread(target=settings_).start()
 
     #-------------------------------------------------------------------------------------    
@@ -141,19 +147,30 @@ while running:
     # --- Visuals when mouse is running dfs-----------------------------------------------
     try:
         if i_in_visited == len(df_search[0]) or i_in_visited == -1:
-            mouse_is_running = False
+            dfs_running = False
             i_in_visited = -1
         else:
             mouse_sprite.x = 155 + (df_search[0][i_in_visited][1]*20)
             mouse_sprite.y = 155 + (df_search[0][i_in_visited][0]*20)
             i_in_visited += 1
 
-        #if mouse_is_running == True:
-            #pygame.time.delay(150)
+        if dfs_running == True:
+            pygame.time.delay(150) # disable for speed while testing
     except:
         pass
     #-------------------------------------------------------------------------------------
     # --- Visuals when mouse is running flood_fill----------------------------------------
+    if i_in_visited == -1 and speed_running == True:
+        if i_in_best_path == len(best_path):
+            speed_running = False
+            i_in_visited = -1
+            i_in_best_path = 0
+        else:
+            mouse_sprite.x = 155 + (best_path[i_in_best_path][1]*20)
+            mouse_sprite.y = 155 + (best_path[i_in_best_path][0]* 20)
+            i_in_best_path += 1
+
+        pygame.time.delay(150)
 
     #-------------------------------------------------------------------------------------
 
