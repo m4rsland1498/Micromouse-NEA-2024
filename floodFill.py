@@ -28,7 +28,7 @@ def flood_fill(maze, SOC):
     if not completed:
         return flood_fill(maze, new_SOC)
     else:
-        return maze#best_path(maze, [[1,1]], False) # start coordinates
+        return best_path(maze, [[1,1]], False) # start coordinates
 
 def best_path(maze, path, completed):
 
@@ -40,33 +40,36 @@ def best_path(maze, path, completed):
                   ]
     
     current = path[-1]
-    next_best = [current[0]+1, current[1]+0]
+    next_best = [0,0]
+    for k in directions:
+                next_best = [current[0]+k[0], current[1]+k[1]]
+                if maze[next_best[0]][next_best[1]] != 0:
+                    break
 
     for i in directions:
 
-        #try: # catches type errors when S is a neighbour
-
         if current == [1,1]: # Start node
-            pfm = [1+i[0], 1+i[1]] # possible first move
+            pfm = [0,0]
+            for j in directions:
+                pfm = [1+j[0], 1+j[1]] # possible first move
+                if maze[pfm[0]][pfm[1]] != 0:
+                    break
             if maze[pfm[0]][pfm[1]] > maze[next_best[0]][next_best[1]]:
                 next_best = [pfm[0],pfm[1]]    
-
 
         elif maze[current[0]+i[0]][current[1]+i[1]] == -1:
             path.append([current[0]+i[0], current[1]+i[1]])
             completed = True
             print("completed") # debugging
-            return path
+            return path # base case
             
         elif (maze[next_best[0]][next_best[1]] < maze[current[0]+i[0]][current[1]+i[1]] 
             and maze[current[0]+i[0]][current[1]+i[1]] != 0):
             next_best = [current[0]+i[0],current[1]+i[1]]        
 
-        #except:
-            #pass # we can pass as we do not need to return to the start
-
     path.append(next_best)
     if not completed:
+        print(best_path)
         return best_path(maze, path, completed)
 
 

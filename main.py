@@ -98,7 +98,7 @@ while running:
         df_search = dfs(maze, 1, 1, visited, undiscovered_maze)
 
         maze = df_search[1]
-
+        
         print(df_search[0])
     #-------------------------------------------------------------------------------------
     #--- flood fill ----------------------------------------------------------------------
@@ -118,9 +118,9 @@ while running:
                     final_y = y
                 else:
                     pass
-        flooded = flood_fill(maze, [(final_x,final_y)])
+        best_path = flood_fill(maze, [(final_x,final_y)])
         print("maze:", maze)
-        print("flooded:", flooded)
+        print("best_path:", best_path)
     #-------------------------------------------------------------------------------------
 
         # "Settings" Button
@@ -152,6 +152,9 @@ while running:
             #pygame.time.delay(150)
     except:
         pass
+    #-------------------------------------------------------------------------------------
+    # --- Visuals when mouse is running flood_fill----------------------------------------
+
     #-------------------------------------------------------------------------------------
 
     pygame.display.update()
