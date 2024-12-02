@@ -6,6 +6,17 @@ def settings__():
         f.write("yes")
         f.close()
 
+    def save_function():
+        mName = name.get("1.0", "end-1c") # mouse name
+        if len(mName) <= 8:
+            speedV = str(speed.get()) # speed value
+            accV = str(acc.get()) # acceleration Value
+            with open("userMice.txt", "a") as f:
+                f.write(mName+":"+speedV+","+accV+"\n")
+                f.close()
+        else:
+            pass # do not save and show message
+
     window = tk.Tk()
     window.title("Settings")
     window.geometry("300x300")
@@ -24,7 +35,7 @@ def settings__():
     name = tk.Text(window, height=1, width=10)
     name.grid()
 
-    save = tk.Button(window, text="SAVE")
+    save = tk.Button(window, text="SAVE", command=(save_function))
     save.grid()
 
     window.mainloop()
