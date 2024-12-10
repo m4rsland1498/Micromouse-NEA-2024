@@ -8,7 +8,10 @@ def settings__():
 
     def save_function():
         mName = name.get("1.0", "end-1c")  # mouse name
-        if len(mName) <= 8: # add "and not white space"
+        if (len(mName) <= 8 
+        and not(" " in mName or "\t" in mName or "\n" in mName)
+        and mName != ""): # checks length, if contains whitespace, and if empty
+            errorMsg.config(text="")
             speedV = str(speed.get())  # speed value
             accV = str(acc.get())  # acceleration value
 
@@ -36,21 +39,45 @@ def settings__():
 
             update_names()
         else:
-            pass # do not save and show message
+            if len(mName) > 8:
+                errorMsg.config(text="Maximum 8 characters.")
+            elif mName == "":
+                errorMsg.config(text="Name cannot be empty.")
+            else:
+                errorMsg.config(text="Cannot contain whitespace.")
 
     def delete_function():
-        pass
+        mName = name.get("1.0", "end-1c")
+        with open("userMice.txt", "r") as f:
+            lines = f.readlines()
+        with open("userMice.txt", "w") as f:
+            name_in = False
+            for line in lines:
+                if mName == line.split(":")[0]:
+                    name_in = True
+                    lines.remove(line)
+                    for i in lines:
+                        f.write(i)
+            if not(name_in):
+                for i in lines:
+                    f.write(i)
+                errorMsg.config(text="Not a saved mouse.")
+            else:
+                errorMsg.config(text="")
+
+        update_names()
 
     def mouse_list():
         mouse_win = tk.Tk()
         mouse_win.title("Your Mice")
         mouse_win.geometry("300x300")
 
-        titles = tk.Label(mouse_win, text="Name:Top Speed:Acceleration")
+        bold = tkfont.Font(size=10, weight="bold")
+        titles = tk.Label(mouse_win, text="Name:Top Speed,Acceleration", font="bold")
         titles.pack()
-        global mice
-        mice = tk.Label(mouse_win, text="")
-        mice.pack()
+        global miceL # mice list
+        miceL = tk.Label(mouse_win, text="")
+        miceL.pack()
 
         update_names()
 
@@ -66,7 +93,7 @@ def settings__():
     def update_names():
         with open("userMice.txt", "r") as f:
             names=f.read()
-        mice.config(text=names)
+        miceL.config(text=names)
 
     #-----------------------------------------------------------------------------------------
 
@@ -84,13 +111,17 @@ def settings__():
     acc.grid(row=20, column=10, padx=10, pady=10, sticky="w")
 
     name = tk.Text(window, height=1, width=10)
-    name.grid()
+    name.grid(row=30, column=0)
 
     save = tk.Button(window, text="SAVE", command=(save_function))
     save.grid()
 
     delete = tk.Button(window, text="DELETE", command=(delete_function))
     delete.grid()
+
+    global errorMsg
+    errorMsg = tk.Label(window, text="")
+    errorMsg.grid(row=30, column=10)
 
     window.mainloop()
 
