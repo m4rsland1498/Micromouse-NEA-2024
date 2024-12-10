@@ -8,7 +8,7 @@ def settings__():
 
     def save_function():
         mName = name.get("1.0", "end-1c")  # mouse name
-        if len(mName) <= 8:
+        if len(mName) <= 8: # add "and not white space"
             speedV = str(speed.get())  # speed value
             accV = str(acc.get())  # acceleration value
 
@@ -33,29 +33,55 @@ def settings__():
                 # If the name wasn't found, append the new data at the end
                 if not name_found:
                     f.write(mName+":"+speedV+","+accV+"\n")
+
+            update_names()
         else:
             pass # do not save and show message
 
     def delete_function():
         pass
 
+    def mouse_list():
+        mouse_win = tk.Tk()
+        mouse_win.title("Your Mice")
+        mouse_win.geometry("300x300")
+
+        titles = tk.Label(mouse_win, text="Name:Top Speed:Acceleration")
+        titles.pack()
+        global mice
+        mice = tk.Label(mouse_win, text="")
+        mice.pack()
+
+        update_names()
+
+        mouse_win.mainloop
+    #-----------------------------------------------------------------------------------------
+
     window = tk.Tk()
     window.title("Settings")
     window.geometry("300x300")
     #window.iconbitmap("logo.ico")
 
-    mouse_label = tk.Label(window, text="Mice:")
-    mouse_label.grid(row=0, column=0, padx=10, pady=10, sticky="w")
+    global update_names
+    def update_names():
+        with open("userMice.txt", "r") as f:
+            names=f.read()
+        mice.config(text=names)
+
+    #-----------------------------------------------------------------------------------------
+
+    mouse_button = tk.Button(window, text="MICE", command=(mouse_list))
+    mouse_button.grid(row=0, column=0, padx=10, pady=10, sticky="w")
 
     speed_label = tk.Label(window, text="Top Speed:")
     speed_label.grid(row=10, column=0, padx=10, pady=10, sticky="w")
-    speed = tk.Scale(window, from_=0, to=200, orient="horizontal")
-    speed.grid(row=10, column=10, padx=10, pady=10)
+    speed = tk.Scale(window, from_=0, to=200, orient="horizontal",)
+    speed.grid(row=10, column=10, padx=10, pady=10, sticky="w")
 
     acc_label = tk.Label(window, text="Acceleration:")
     acc_label.grid(row=20, column=0, padx=10, pady=10, sticky="w")
     acc = tk.Scale(window, from_=0, to=200, orient="horizontal")
-    acc.grid(row=20, column=10, padx=10, pady=10)
+    acc.grid(row=20, column=10, padx=10, pady=10, sticky="w")
 
     name = tk.Text(window, height=1, width=10)
     name.grid()
