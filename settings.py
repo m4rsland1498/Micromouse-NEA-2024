@@ -4,10 +4,15 @@ from tkinter import font as tkfont
 def settings__():
     with open("is_settings_open.txt", "w") as f:
         f.write("yes")
-        f.close()
 
     def save_function():
         mName = name.get("1.0", "end-1c")  # mouse name
+
+        number_of_saved = 0
+        with open("userMice.txt", "r") as f:
+            for line in f:
+                number_of_saved+=1
+
         if (len(mName) <= 8 
         and not(" " in mName or "\t" in mName or "\n" in mName)
         and mName != ""): # checks length, if contains whitespace, and if empty
@@ -33,9 +38,12 @@ def settings__():
                         # Otherwise, just write the line back
                         f.write(line)
 
-                # If the name wasn't found, append the new data at the end
+                # If the name wasn't found, check if enough space, and append the new data at the end
                 if not name_found:
-                    f.write(mName+":"+speedV+","+accV+"\n")
+                    if number_of_saved < 15:
+                        f.write(mName+":"+speedV+","+accV+"\n")
+                    else:
+                        errorMsg.config(text="Maximum mice reached.")
 
             update_names()
         else:
@@ -93,7 +101,10 @@ def settings__():
     def update_names():
         with open("userMice.txt", "r") as f:
             names=f.read()
-        miceL.config(text=names)
+        try: # removes error message if save/delete whilst mouse list window not open
+            miceL.config(text=names)
+        except:
+            pass
 
     #-----------------------------------------------------------------------------------------
 
@@ -125,8 +136,7 @@ def settings__():
 
     window.mainloop()
 
-    f = open("is_settings_open.txt", "w")
-    f.write("no")
-    f.close()
+    with open("is_settings_open.txt", "w") as f:
+        f.write("no")
 
 settings__() # for testing purposes
