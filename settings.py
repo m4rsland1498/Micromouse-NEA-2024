@@ -76,7 +76,7 @@ def settings__():
         update_names()
 
     def mouse_list():
-        mouse_win = tk.Tk()
+        mouse_win = tk.Toplevel()
         mouse_win.title("Your Mice")
         mouse_win.geometry("300x300")
 
@@ -89,7 +89,7 @@ def settings__():
 
         update_names()
 
-        mouse_win.mainloop
+        mouse_win.mainloop()
     #-----------------------------------------------------------------------------------------
 
     window = tk.Tk()
@@ -133,7 +133,7 @@ def settings__():
     global errorMsg
     errorMsg = tk.Label(window, text="")
     errorMsg.grid(row=30, column=10)
-
+    
     window.mainloop()
 
     with open("is_settings_open.txt", "w") as f:
