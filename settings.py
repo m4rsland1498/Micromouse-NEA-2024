@@ -89,7 +89,15 @@ def settings__():
 
         update_names()
 
-        mouse_win.mainloop()
+        #mouse_win.mainloop()
+        while True:
+            try:
+                # Process pending events
+                mouse_win.update_idletasks()
+                mouse_win.update()
+            except tk.TclError:
+                # Break the loop if the window is closed
+                break
     #-----------------------------------------------------------------------------------------
 
     window = tk.Tk()
@@ -134,7 +142,15 @@ def settings__():
     errorMsg = tk.Label(window, text="")
     errorMsg.grid(row=30, column=10)
     
-    window.mainloop()
+    #window.mainloop()
+    while True:
+        try:
+            # Process pending events
+            window.update_idletasks()
+            window.update()
+        except tk.TclError:
+            # Break the loop if the window is closed
+            break
 
     with open("is_settings_open.txt", "w") as f:
         f.write("no")
