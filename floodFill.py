@@ -71,6 +71,39 @@ def best_path(maze, path, completed):
     if not completed:
         print(best_path)
         return best_path(maze, path, completed)
+    
+def delay_coefficient_calculator(path, acceleration, speed):
+    coefficients = []
+    straights = []
+    straight = 0
+    for i in range(len(path)):
+        if path[i-1][0] != path[i][0] and path[i-1][1] != path[i][1]:
+            straights.append(straight)
+            straight = 0
+        else:
+            straight+=1
+            i+=1
+
+    vTurn = 0.5*speed # turn velocity
+    aDistance = ((speed**2)-(vTurn**2))/(2*acceleration)# distance to acc/dec-elerate
+
+    for straight in straights:
+        dTurn = straight+1 # distance to turn
+        for node in range(straight-1):
+            dTurn -= 1
+            if straight > aDistance:
+                speed_coefficient = (((vTurn**2)+(2*acceleration*straight))**0.5)/speed
+            elif dTurn <= aDistance:
+                speed_coefficient = (((vTurn**2)+(2*acceleration*dTurn))**0.5)/speed
+            else:
+                speed_coefficient = 1
+            coefficients.append(speed_coefficient)
+
+    return coefficients
+
+
+
+        
 
 
 # testing below 

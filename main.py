@@ -14,6 +14,7 @@ from dfs import dfs
 import mouse
 import buttons
 from floodFill import flood_fill
+from floodFill import delay_coefficient_calculator
 
 
 global maze
@@ -126,6 +127,9 @@ while running:
         best_path = flood_fill(maze, [(final_x,final_y)])
         print("maze:", maze)
         print("best_path:", best_path)
+        speed = 50 # temporary value, will be gotten from user settings
+        acceleration = 50 # temporary value, will be gotten from user settings
+        vCoefficients = delay_coefficient_calculator(best_path, speed, acceleration)
     #-------------------------------------------------------------------------------------
 
         # "Settings" Button
@@ -133,7 +137,8 @@ while running:
     if (settings.get_x_pos() <= mouse[0] <= settings.get_x_pos()+140 and
     settings.get_y_pos() <= mouse[1] <= settings.get_y_pos()+40 and
     clicked == True and is_open == "no" and dfs_running == False
-    and speed_running == False):
+    and speed_running == False): 
+
         threading.Thread(target=settings_).start()
 
     #-------------------------------------------------------------------------------------    
@@ -155,7 +160,8 @@ while running:
             i_in_visited += 1
 
         if dfs_running == True:
-            pygame.time.delay(150) # disable for speed while testing
+            #pygame.time.delay(150) # disable for speed while testing
+            pass
     except:
         pass
     #-------------------------------------------------------------------------------------
@@ -170,7 +176,8 @@ while running:
             mouse_sprite.y = 155 + (best_path[i_in_best_path][0]* 20)
             i_in_best_path += 1
 
-        pygame.time.delay(150)
+        coefficient = vCoefficients[i_in_best_path - 1]
+        pygame.time.delay(150*coefficient)
 
     #-------------------------------------------------------------------------------------
 
