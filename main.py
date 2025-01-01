@@ -176,8 +176,10 @@ while running:
             mouse_sprite.y = 155 + (best_path[i_in_best_path][0]* 20)
             i_in_best_path += 1
 
+        print("i_in_best_path:", i_in_best_path)
+        print("vCoefficients:", vCoefficients)
         coefficient = vCoefficients[i_in_best_path - 1]
-        pygame.time.delay(150*coefficient)
+        pygame.time.delay(int(1000*coefficient))
 
     #-------------------------------------------------------------------------------------
 
