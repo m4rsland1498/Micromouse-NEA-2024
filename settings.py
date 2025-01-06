@@ -14,8 +14,12 @@ def settings__():
                 number_of_saved+=1
 
         if (len(mName) <= 8 
-        and not(" " in mName or "\t" in mName or "\n" in mName)
-        and mName != ""): # checks length, if contains whitespace, and if empty
+        and not(" " in mName or "\t" in mName or "\n" in mName 
+        or "," in mName or ":" in mName)
+        and mName != ""
+        and mName != "default"):
+        # checks length, if contains whitespace, if empty,
+        # and for disallowed characters/name
             errorMsg.config(text="")
             speedV = str(speed.get())  # speed value
             accV = str(acc.get())  # acceleration value
@@ -47,7 +51,11 @@ def settings__():
 
             update_names()
         else:
-            if len(mName) > 8:
+            if mName == "default":
+                errorMsg.config(text="Name not allowed.")
+            elif ":" in mName or "," in mName:
+                errorMsg.config(text="Character not allowed.")
+            elif len(mName) > 8:
                 errorMsg.config(text="Maximum 8 characters.")
             elif mName == "":
                 errorMsg.config(text="Name cannot be empty.")
@@ -56,6 +64,11 @@ def settings__():
 
     def delete_function():
         mName = name.get("1.0", "end-1c")
+        with open("current_mouse.txt", "r") as f:
+            line = f.readlines()[0]
+        if mName == line.split(":")[0]:
+            with open("current_mouse.txt", "w") as f:
+                f.write("default:67,67")
         with open("userMice.txt", "r") as f:
             lines = f.readlines()
         with open("userMice.txt", "w") as f:
@@ -103,7 +116,6 @@ def settings__():
         mName = name.get("1.0", "end-1c")
         with open("userMice.txt", "r") as f:
             lines = f.readlines()
-        #with open("userMice.txt", "w") as f:
             name_in = False
             for line in lines:
                 if mName == line.split(":")[0]:
@@ -120,7 +132,7 @@ def settings__():
 
     window = tk.Tk()
     window.title("Settings")
-    window.geometry("410x320")
+    window.geometry("420x320")
     #window.iconbitmap("logo.ico")
 
     global update_names
