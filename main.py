@@ -127,8 +127,13 @@ while running:
         best_path = flood_fill(maze, [(final_x,final_y)])
         print("maze:", maze)
         print("best_path:", best_path)
-        speed = 50 # temporary value, will be gotten from user settings
-        acceleration = 50 # temporary value, will be gotten from user settings
+
+        # get speed and acceleration values for current mouse
+        with open("current_mouse.txt", "r") as file:
+            line = file.readline().strip()
+        _, values = line.split(":")  # Split by colon
+        speed, acceleration = map(float, values.split(","))
+
         vCoefficients = delay_coefficient_calculator(best_path, speed, acceleration)
     #-------------------------------------------------------------------------------------
 
@@ -179,7 +184,9 @@ while running:
         print("i_in_best_path:", i_in_best_path)
         print("vCoefficients:", vCoefficients)
         coefficient = vCoefficients[i_in_best_path - 1]
-        pygame.time.delay(int(1000*coefficient))
+        hop_delay = 10*13400/speed # hop_delay is in millisecondseach cell here is 20cmx20cm,
+        #micrmouse speeds roughly 1-3m/s, max speed value is 200, lowest is 67, dampener(50)*67*1000/5
+        pygame.time.delay(int(hop_delay*coefficient))
 
     #-------------------------------------------------------------------------------------
 

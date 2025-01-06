@@ -98,11 +98,29 @@ def settings__():
             except tk.TclError:
                 # Break the loop if the window is closed
                 break
+
+    def select_function():
+        mName = name.get("1.0", "end-1c")
+        with open("userMice.txt", "r") as f:
+            lines = f.readlines()
+        #with open("userMice.txt", "w") as f:
+            name_in = False
+            for line in lines:
+                if mName == line.split(":")[0]:
+                    name_in = True
+                    selection = line
+                    break
+
+        if name_in:
+            with open("current_mouse.txt", "w") as f:
+                f.write(selection+"\n")
+        else:
+            errorMsg.config(text="Not a saved mouse.")
     #-----------------------------------------------------------------------------------------
 
     window = tk.Tk()
     window.title("Settings")
-    window.geometry("300x300")
+    window.geometry("410x320")
     #window.iconbitmap("logo.ico")
 
     global update_names
@@ -119,14 +137,17 @@ def settings__():
     mouse_button = tk.Button(window, text="MICE", command=(mouse_list))
     mouse_button.grid(row=0, column=0, padx=10, pady=10, sticky="w")
 
+    label = tk.Label(window, text="67=1m/s(m/s/s), 200 3m/s(m/s/s)")
+    label.grid()
+
     speed_label = tk.Label(window, text="Top Speed:")
     speed_label.grid(row=10, column=0, padx=10, pady=10, sticky="w")
-    speed = tk.Scale(window, from_=0, to=200, orient="horizontal",)
+    speed = tk.Scale(window, from_=67, to=200, orient="horizontal",)
     speed.grid(row=10, column=10, padx=10, pady=10, sticky="w")
 
     acc_label = tk.Label(window, text="Acceleration:")
     acc_label.grid(row=20, column=0, padx=10, pady=10, sticky="w")
-    acc = tk.Scale(window, from_=0, to=200, orient="horizontal")
+    acc = tk.Scale(window, from_=67, to=200, orient="horizontal")
     acc.grid(row=20, column=10, padx=10, pady=10, sticky="w")
 
     name = tk.Text(window, height=1, width=10)
@@ -137,6 +158,9 @@ def settings__():
 
     delete = tk.Button(window, text="DELETE", command=(delete_function))
     delete.grid()
+
+    select = tk.Button(window, text="SELECT", command=(select_function))
+    select.grid()
 
     global errorMsg
     errorMsg = tk.Label(window, text="")

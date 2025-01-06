@@ -77,12 +77,12 @@ def delay_coefficient_calculator(path, acceleration, speed):
     straights = []
     straight = 1
     for i in range(2, len(path)):
-        if ((path[i-2][0] != path[i][0] and path[i-2][1] != path[i][1])
-             or path[i] == path[-1]):
+        if (path[i-2][0] != path[i][0] and path[i-2][1] != path[i][1]):
             straights.append(straight)
             straight = 1
         else:
             straight+=1
+        straights.append(straight)
 
     vTurn = 0.5*speed # turn velocity
     aDistance = ((speed**2)-(vTurn**2))/(2*acceleration)# distance to acc/dec-elerate
