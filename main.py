@@ -172,20 +172,24 @@ while running:
     #-------------------------------------------------------------------------------------
     # --- Visuals when mouse is running flood_fill----------------------------------------
     if i_in_visited == -1 and speed_running == True:
-        if i_in_best_path == len(best_path):
-            speed_running = False
-            i_in_visited = -1
-            i_in_best_path = 0
-        else:
+        try:
             mouse_sprite.x = 155 + (best_path[i_in_best_path][1]*20)
             mouse_sprite.y = 155 + (best_path[i_in_best_path][0]* 20)
             i_in_best_path += 1
+        except:
+            speed_running = False
+            i_in_visited = -1
+            i_in_best_path = 0
+            
+            maze = random.choice(mazes) # sends back to start and creates new maze so no errors when click run again
+            mouse_sprite.x = 175
+            mouse_sprite.y = 175
 
         print("i_in_best_path:", i_in_best_path)
         print("vCoefficients:", vCoefficients)
         coefficient = vCoefficients[i_in_best_path - 1]
-        hop_delay = 10*13400/speed # hop_delay is in millisecondseach cell here is 20cmx20cm,
-        #micrmouse speeds roughly 1-3m/s, max speed value is 200, lowest is 67, dampener(50)*67*1000/5
+        hop_delay = 13400/speed # hop_delay is in millisecondseach cell here is 20cmx20cm,
+        #micrmouse speeds roughly 1-3m/s, max speed value is 200, lowest is 67, 67*1000/5
         pygame.time.delay(int(hop_delay*coefficient))
 
     #-------------------------------------------------------------------------------------

@@ -68,7 +68,7 @@ def settings__():
             line = f.readlines()[0]
         if mName == line.split(":")[0]:
             with open("current_mouse.txt", "w") as f:
-                f.write("default:67,67")
+                f.write("default:67,67\n")
         with open("userMice.txt", "r") as f:
             lines = f.readlines()
         with open("userMice.txt", "w") as f:
