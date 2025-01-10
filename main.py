@@ -15,6 +15,7 @@ import mouse
 import buttons
 from floodFill import flood_fill
 from floodFill import delay_coefficient_calculator
+import time
 
 
 global maze
@@ -48,6 +49,8 @@ i_in_visited = -1
 i_in_best_path = 0
 dfs_running = False
 speed_running = False
+start_ticks = 0
+clock = pygame.time.Clock()
 
 
 #--- Main Loop ---
@@ -59,6 +62,37 @@ while running:
             running = False
             
     window.fill((255,255,255))
+
+    # --- clock ---
+    if not speed_running:
+        minutes = "0"
+        seconds = "0"
+        start_ticks = 0
+    else:
+        elapsed_time = pygame.time.get_ticks() - start_ticks
+        minutes = str(elapsed_time // 60000)
+        seconds = str((elapsed_time // 1000) % 60)
+        #time = f"{minutes:02}:{seconds:02}"
+    
+    font = pygame.font.SysFont(None, 100)
+
+    minutes_surface = font.render(minutes, True, (0, 0, 0))
+    colon_surface = font.render(":", True, (0, 0, 0))
+    seconds_surface = font.render(seconds, True, (0, 0, 0))
+
+    # Calculate positions
+    center_x = window.get_width() // 2
+    center_y = 100
+
+    # Align text around the colon
+    colon_rect = colon_surface.get_rect(center=(center_x, center_y))
+    minutes_rect = minutes_surface.get_rect(right=colon_rect.left, centery=center_y)
+    seconds_rect = seconds_surface.get_rect(left=colon_rect.right, centery=center_y)
+
+    # Blit to the screen
+    window.blit(minutes_surface, minutes_rect)
+    window.blit(colon_surface, colon_rect)
+    window.blit(seconds_surface, seconds_rect)
 
     pygame.draw.rect(window, (0,0,0), [155, 155, 440, 440]) # Maze Block
 
@@ -135,6 +169,8 @@ while running:
         speed, acceleration = map(float, values.split(","))
 
         vCoefficients = delay_coefficient_calculator(best_path, speed, acceleration)
+
+        start_ticks = pygame.time.get_ticks()
     #-------------------------------------------------------------------------------------
 
         # "Settings" Button
@@ -165,7 +201,7 @@ while running:
             i_in_visited += 1
 
         if dfs_running == True:
-            #pygame.time.delay(150) # disable for speed while testing
+            pygame.time.delay(150) # disable for speed while testing
             pass
     except:
         pass
@@ -195,6 +231,7 @@ while running:
     #-------------------------------------------------------------------------------------
 
     pygame.display.update()
+    clock.tick(60)
     
     # Rest of Code
     
