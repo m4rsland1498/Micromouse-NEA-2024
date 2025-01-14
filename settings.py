@@ -191,4 +191,4 @@ def settings__():
     with open("is_settings_open.txt", "w") as f:
         f.write("no")
 
-settings__() # for testing purposes
+#settings__() # for testing purposes

@@ -68,11 +68,36 @@ while running:
         minutes = "0"
         seconds = "0"
         start_ticks = 0
+        try:
+            if i_in_visited == len(best_path) and dfs_running == False:
+                with open("current_mouse.txt", "r") as f:
+                    current = f.readlines()[0]
+                with open("userMice.txt", "r") as f:
+                    lines = f.readlines()
+                change = False
+                try:
+                    with open("current_mouse.txt", "r") as file:
+                        line = file.readline().strip()
+                    _, values = line.split(":")  # Split by colon
+                    speed, acceleration, oldminutes, oldseconds = map(float, values.split(","))
+                    if oldminutes < minutes:
+                        change = True
+                    if oldminutes == minutes:
+                        if oldseconds < seconds:
+                            change = True
+                except:
+                    change = True
+                
+                if change:
+                    for i in range(len(lines)):
+                        if current == lines[i].split(":")[0]:
+                            lines[i] = lines[i]+","+minutes+seconds
+        except:
+            pass
     else:
         elapsed_time = pygame.time.get_ticks() - start_ticks
         minutes = str(elapsed_time // 60000)
         seconds = str((elapsed_time // 1000) % 60)
-        #time = f"{minutes:02}:{seconds:02}"
     
     font = pygame.font.SysFont(None, 100)
 
@@ -166,7 +191,10 @@ while running:
         with open("current_mouse.txt", "r") as file:
             line = file.readline().strip()
         _, values = line.split(":")  # Split by colon
-        speed, acceleration = map(float, values.split(","))
+        try:
+            speed, acceleration, temp, temp2 = map(float, values.split(","))
+        except:
+            speed, acceleration = map(float, values.split(","))
 
         vCoefficients = delay_coefficient_calculator(best_path, speed, acceleration)
 
@@ -201,7 +229,7 @@ while running:
             i_in_visited += 1
 
         if dfs_running == True:
-            pygame.time.delay(150) # disable for speed while testing
+            #pygame.time.delay(150) # disable for speed while testing
             pass
     except:
         pass
