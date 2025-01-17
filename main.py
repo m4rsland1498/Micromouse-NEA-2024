@@ -63,42 +63,51 @@ while running:
             
     window.fill((255,255,255))
 
-    # --- clock ---
+    # --- clock ----------------------------------------------------------------------
     if not speed_running:
         minutes = "0"
         seconds = "0"
         start_ticks = 0
-        try:
-            if i_in_visited == len(best_path) and dfs_running == False:
-                with open("current_mouse.txt", "r") as f:
-                    current = f.readlines()[0]
-                with open("userMice.txt", "r") as f:
-                    lines = f.readlines()
-                change = False
-                try:
-                    with open("current_mouse.txt", "r") as file:
-                        line = file.readline().strip()
-                    _, values = line.split(":")  # Split by colon
-                    speed, acceleration, oldminutes, oldseconds = map(float, values.split(","))
-                    if oldminutes < minutes:
-                        change = True
-                    if oldminutes == minutes:
-                        if oldseconds < seconds:
+        if True:
+            try:
+                #if i_in_visited == len(best_path) and dfs_running == False:
+                if True:
+                    with open("current_mouse.txt", "r") as f:
+                        current = f.readlines()[0]
+                    change = False
+                    try:
+                        with open("current_mouse.txt", "r") as file:
+                            line = file.readline().strip()
+                        _, values = line.split(":")  # Split by colon
+                        speed, acceleration, oldminutes, oldseconds = map(float, values.split(","))
+                        if oldminutes < prev_minutes:
                             change = True
-                except:
-                    change = True
-                
-                if change:
-                    for i in range(len(lines)):
-                        if current == lines[i].split(":")[0]:
-                            lines[i] = lines[i]+","+minutes+seconds
-        except:
-            pass
+                        if oldminutes == prev_minutes:
+                            if oldseconds < seconds:
+                                change = True
+                    except:
+                        change = True
+                    
+                    if change:
+                        with open("userMice.txt", "r") as f:
+                            lines = f.readlines()
+                        print("lines", lines)
+                        for i in range(len(lines)):
+                            if current == lines[i].split(":")[0]:
+                                lines[i] = lines[i]+","+prev_minutes+","+prev_seconds
+
+                        print("lines", lines)
+                        with open("userMice.txt", "w") as f:
+                            f.write(lines)
+            except:
+                pass
     else:
         elapsed_time = pygame.time.get_ticks() - start_ticks
         minutes = str(elapsed_time // 60000)
         seconds = str((elapsed_time // 1000) % 60)
-    
+        prev_minutes = minutes
+        prev_seconds = seconds
+    #############################################################################
     font = pygame.font.SysFont(None, 100)
 
     minutes_surface = font.render(minutes, True, (0, 0, 0))
