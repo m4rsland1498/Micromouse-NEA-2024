@@ -48,6 +48,12 @@ def settings__():
                         f.write(mName+":"+speedV+","+accV+"\n")
                     else:
                         errorMsg.config(text="Maximum mice reached.")
+                else:
+                    with open("current_mouse.txt", "r") as f:
+                            current = f.readlines()[0]
+                    if current.split(":")[0] == mName:
+                        with open("current_mouse.txt", "w") as f:
+                            f.write(mName+":"+speedV+","+accV+"\n")
 
             update_names()
         else:
@@ -91,10 +97,10 @@ def settings__():
     def mouse_list():
         mouse_win = tk.Toplevel()
         mouse_win.title("Your Mice")
-        mouse_win.geometry("300x300")
+        mouse_win.geometry("600x300")
 
         bold = tkfont.Font(size=10, weight="bold")
-        titles = tk.Label(mouse_win, text="Name:Top Speed,Acceleration", font="bold")
+        titles = tk.Label(mouse_win, text="Name:TopSpeed,Acceleration,BestMinutes,BestSeconds, LengthOfPath", font="bold")
         titles.pack()
         global miceL # mice list
         miceL = tk.Label(mouse_win, text="")

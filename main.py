@@ -16,6 +16,7 @@ import buttons
 from floodFill import flood_fill
 from floodFill import delay_coefficient_calculator
 import time
+from updateTimes import updateTimes
 
 
 global maze
@@ -51,6 +52,8 @@ dfs_running = False
 speed_running = False
 start_ticks = 0
 clock = pygame.time.Clock()
+prev_minutes = "0"
+prev_seconds = "0"
 
 
 #--- Main Loop ---
@@ -68,45 +71,15 @@ while running:
         minutes = "0"
         seconds = "0"
         start_ticks = 0
-        if True:
-            try:
-                #if i_in_visited == len(best_path) and dfs_running == False:
-                if True:
-                    with open("current_mouse.txt", "r") as f:
-                        current = f.readlines()[0]
-                    change = False
-                    try:
-                        with open("current_mouse.txt", "r") as file:
-                            line = file.readline().strip()
-                        _, values = line.split(":")  # Split by colon
-                        speed, acceleration, oldminutes, oldseconds = map(float, values.split(","))
-                        if oldminutes < prev_minutes:
-                            change = True
-                        if oldminutes == prev_minutes:
-                            if oldseconds < seconds:
-                                change = True
-                    except:
-                        change = True
-                    
-                    if change:
-                        with open("userMice.txt", "r") as f:
-                            lines = f.readlines()
-                        print("lines", lines)
-                        for i in range(len(lines)):
-                            if current == lines[i].split(":")[0]:
-                                lines[i] = lines[i]+","+prev_minutes+","+prev_seconds
-
-                        print("lines", lines)
-                        with open("userMice.txt", "w") as f:
-                            f.write(lines)
-            except:
-                pass
+        change = False
     else:
         elapsed_time = pygame.time.get_ticks() - start_ticks
         minutes = str(elapsed_time // 60000)
         seconds = str((elapsed_time // 1000) % 60)
         prev_minutes = minutes
         prev_seconds = seconds
+        if i_in_best_path == len(best_path)-1:
+            updateTimes(minutes, seconds, best_path)
     #############################################################################
     font = pygame.font.SysFont(None, 100)
 
@@ -201,7 +174,7 @@ while running:
             line = file.readline().strip()
         _, values = line.split(":")  # Split by colon
         try:
-            speed, acceleration, temp, temp2 = map(float, values.split(","))
+            speed, acceleration, temp, temp2, temp3 = map(float, values.split(","))
         except:
             speed, acceleration = map(float, values.split(","))
 
