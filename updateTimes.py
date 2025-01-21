@@ -10,11 +10,19 @@ def updateTimes(minutes, seconds, best_path):
                 _, values = i.split(":")
         try:
             speed, acceleration, cminutes, cseconds, length = map(str, values.split(",")) #current min/sec
-            if int(minutes) < int(cminutes):
+            #current average speed
+            cas = (int(length))/((int(cminutes)*60)+(int(cseconds)))
+            #new average speed
+            nas = (len(best_path))/((int(minutes)*60)+(int(seconds)))
+            if nas > cas:
                 change = True
-            elif int(minutes) == int(cminutes):
-                if int(seconds) < int(cseconds):
+            elif nas == cas:
+                if int(minutes) < int(cminutes):
                     change = True
+                elif int(minutes) == int(cminutes):
+                    if int(seconds) < int(cseconds):
+                        change = True
+
         except:
             speed, acceleration = map(str, values.split(","))
             print("hello")
