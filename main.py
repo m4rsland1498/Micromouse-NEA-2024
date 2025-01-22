@@ -80,7 +80,7 @@ while running:
         prev_seconds = seconds
         if i_in_best_path == len(best_path)-1:
             updateTimes(minutes, seconds, best_path)
-    #############################################################################
+
     font = pygame.font.SysFont(None, 100)
 
     minutes_surface = font.render(minutes, True, (0, 0, 0))
@@ -100,6 +100,8 @@ while running:
     window.blit(minutes_surface, minutes_rect)
     window.blit(colon_surface, colon_rect)
     window.blit(seconds_surface, seconds_rect)
+
+#############################################################################
 
     pygame.draw.rect(window, (0,0,0), [155, 155, 440, 440]) # Maze Block
 
