@@ -17,6 +17,8 @@ from floodFill import flood_fill
 from floodFill import delay_coefficient_calculator
 import time
 from updateTimes import updateTimes
+from mmStatistics import statsWindow
+
 
 
 global maze
@@ -42,6 +44,7 @@ height = window.get_height()
 gen_maze = buttons.Buttons("Generate Maze", 0, 0)
 run = buttons.Buttons("Run", 145, 0)
 settings = buttons.Buttons("Settings", 290, 0)
+statistics = buttons.Buttons("Statistics", 435, 0)
 
 mouse_sprite = mouse.mouse_sprite()
 
@@ -193,6 +196,14 @@ while running:
     and speed_running == False): 
 
         threading.Thread(target=settings_).start()
+
+        # "Statistics" Button
+            # opens matplotlib statistics window
+    if (statistics.get_x_pos() <= mouse[0] <= statistics.get_x_pos()+140 and
+    statistics.get_y_pos() <= mouse[1] <= statistics.get_y_pos()+40 and
+    clicked == True and is_open == "no" and dfs_running == False
+    and speed_running == False):
+        threading.Thread(target=statsWindow).start()
 
     #-------------------------------------------------------------------------------------    
     
