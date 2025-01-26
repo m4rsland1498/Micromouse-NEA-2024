@@ -1,9 +1,10 @@
 import tkinter as tk
 from tkinter import font as tkfont
+import threading
 
 def settings__():
-    with open("is_settings_open.txt", "w") as f:
-        f.write("yes")
+    #with open("is_settings_open.txt", "w") as f:
+        #f.write("yes")
 
     def save_function():
         mName = name.get("1.0", "end-1c")  # mouse name
@@ -152,7 +153,7 @@ def settings__():
 
     #-----------------------------------------------------------------------------------------
 
-    mouse_button = tk.Button(window, text="MICE", command=(mouse_list))
+    mouse_button = tk.Button(window, text="MICE", command=(threading.Thread(target=mouse_list)))
     mouse_button.grid(row=0, column=0, padx=10, pady=10, sticky="w")
 
     label = tk.Label(window, text="67=1m/s(m/s/s), 200 3m/s(m/s/s)")

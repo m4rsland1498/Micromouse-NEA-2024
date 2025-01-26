@@ -14,3 +14,4 @@ def draw_maze(maze, window, pygame):
                     pygame.draw.rect(window, (255,255,255), [155+(20*j), 155+(20*i), 20, 20])
                 else:
                     pygame.draw.rect(window, (0,0,0), [155+(20*j), 155+(20*i), 20, 20])
+                    

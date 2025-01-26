@@ -2,6 +2,7 @@ import os
 os.environ['PYGAME_HIDE_SUPPORT_PROMPT'] = "hide"
 
 import threading
+import multiprocessing
 
 from introduction import introduce
 import pygame
@@ -195,7 +196,7 @@ while running:
     clicked == True and is_open == "no" and dfs_running == False
     and speed_running == False): 
 
-        threading.Thread(target=settings_).start()
+        threading.Thread(target=settings_, daemon=True).start()
 
         # "Statistics" Button
             # opens matplotlib statistics window
@@ -203,7 +204,8 @@ while running:
     statistics.get_y_pos() <= mouse[1] <= statistics.get_y_pos()+40 and
     clicked == True and is_open == "no" and dfs_running == False
     and speed_running == False):
-        threading.Thread(target=statsWindow).start()
+        
+        threading.Thread(target=statsWindow, daemon=True).start()
 
     #-------------------------------------------------------------------------------------    
     

@@ -1,4 +1,6 @@
 def statsWindow():
+    import matplotlib
+    matplotlib.use("TkAgg")
     import matplotlib.pyplot as plt
 
     with open("userMice.txt", "r") as f:
