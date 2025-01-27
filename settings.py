@@ -45,7 +45,7 @@ def settings__():
 
                 # If the name wasn't found, check if enough space, and append the new data at the end
                 if not name_found:
-                    if number_of_saved < 15:
+                    if number_of_saved < 9:
                         f.write(mName+":"+speedV+","+accV+"\n")
                     else:
                         errorMsg.config(text="Maximum mice reached.")
