@@ -226,7 +226,7 @@ while running:
             i_in_visited += 1
 
         if dfs_running == True:
-            #pygame.time.delay(150) # disable for speed while testing
+            pygame.time.delay(150) # disable for speed while testing
             pass
     except:
         pass
