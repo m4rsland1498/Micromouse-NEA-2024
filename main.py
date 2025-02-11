@@ -258,9 +258,9 @@ while running:
     pygame.display.update()
     clock.tick(60)
     
-    # Rest of Code
+    
     
 pygame.quit()
-    # Rest of Code
+    
     
 pygame.quit()
